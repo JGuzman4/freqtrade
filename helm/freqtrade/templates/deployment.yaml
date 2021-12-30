@@ -39,7 +39,7 @@ spec:
           args:
             - trade
             - "--db-url=sqlite:////freqtrade/user_data/tradesv3.sqlite"
-            - "--strategy=Zeus"
+            - "--strategy={{ .Values.strategy }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

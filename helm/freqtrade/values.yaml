@@ -56,6 +56,8 @@ tolerations: []
 
 affinity: {}
 
+strategy: "Zeus"
+
 config:
   max_open_trades: 10
   stake_currency: "USDT"
