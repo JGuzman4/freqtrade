@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "freqtrade.fullname" . }}-config
+  labels:
+    {{- include "freqtrade.labels" . | nindent 4 }}
+data:
+  config.json: |
+    {
+        "max_open_trades": {{ .Values.config.max_open_trades }},
+        "stake_currency": "{{ .Values.config.stake_currency }}",
+        "stake_amount": "{{ .Values.config.stake_amount }}",
+        "tradable_balance_ratio": {{ .Values.config.tradable_balance_ratio }},
+        "fiat_display_currency": "{{ .Values.config.fiat_display_currency }}",
+        "dry_run": {{ .Values.config.dry_run }},
+        "timeframe": "{{ .Values.config.timeframe }}",
+        "cancel_open_orders_on_exit": {{ .Values.config.cancel_open_orders_on_exit }},
+        "unfilledtimeout": {{ .Values.config.unfilledtimeout | toJson }},
+        "bid_strategy": {{ .Values.config.bid_strategy | toJson }},
+        "ask_strategy": {{ .Values.config.ask_strategy | toJson }},
+        "exchange": {
+            "name": "{{ .Values.config.exchange.name }}",
+            "key": "{{ .Values.config.exchange.key }}",
+            "secret": "{{ .Values.config.exchange.secret }}",
+            "ccxt_config": {{ .Values.config.exchange.ccxt_config | toJson }},
+            "ccxt_async_config": {{ .Values.config.exchange.ccxt_async_config | toJson }},
+            "pair_whitelist": {{ .Values.config.exchange.pair_whitelist | toJson }},
+            "pair_blacklist": {{ .Values.config.exchange.pair_blacklist | toJson }}
+        },
+        "pairlists": {{ .Values.config.pairlists | toJson }},
+        "edge": {{ .Values.config.edge | toJson }},
+        "telegram": {{ .Values.config.telegram | toJson }},
+        "api_server": {{ .Values.config.api_server | toJson }},
+        "bot_name": "{{ .Values.config.bot_name }}",
+        "initial_state": "{{ .Values.config.initial_state }}",
+        "forcebuy_enable": {{ .Values.config.forcebuy_enable }},
+        "internals": {{ .Values.config.internals | toJson }}
+    }

@@ -1,0 +1,129 @@
+# Default values for freqtrade.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: freqtrade
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+config:
+  max_open_trades: 10
+  stake_currency: "USDT"
+  stake_amount: "unlimited"
+  tradable_balance_ratio: 0.99
+  fiat_display_currency: "USD"
+  dry_run: true
+  timeframe: "15m"
+  cancel_open_orders_on_exit: false
+  unfilledtimeout:
+    buy: 10
+    sell: 30
+    unit: "minutes"
+  bid_strategy:
+    price_side: "bid"
+    ask_last_balance: 0.0
+    use_order_book: true
+    order_book_top: 1
+    check_depth_of_market:
+      enabled: false
+      bids_to_ask_delta: 1
+  ask_strategy:
+    price_side: "ask"
+    use_order_book: true
+    order_book_top: 1
+  exchange:
+    name: "binance"
+    key: ""
+    secret: ""
+    ccxt_config: {}
+    ccxt_async_config: {}
+    pair_whitelist: []
+    pair_blacklist: []
+  pairlists: 
+    - method: "StaticPairList"
+      number_assets: 20
+      sort_key: "quoteVolume"
+      min_value: 0
+      refresh_period: 1800
+  edge:
+    enabled: false
+    process_throttle_secs: 3600
+    calculate_since_number_of_days: 7
+    allowed_risk: 0.01
+    stoploss_range_min: -0.01
+    stoploss_range_max: -0.1
+    stoploss_range_step: -0.01
+    minimum_winrate: 0.60
+    minimum_expectancy: 0.20
+    min_trade_number: 10
+    max_trade_duration_minute: 1440
+    remove_pumps: false
+  telegram:
+      enabled: false
+      token: ""
+      chat_id: ""
+  api_server:
+    enabled: true
+    listen_ip_address: "127.0.0.1"
+    listen_port: 8080
+    verbosity: "error"
+    enable_openapi: false
+    jwt_secret_key: "3f50fe7c2f517fba82e81fca9aaaa5aec6c0891a7b0dedf8baa901af54516717"
+    CORS_origins: []
+    username: "freqtrader"
+    password: "password"
+  bot_name: "freqtrade"
+  initial_state: "running"
+  forcebuy_enable: false
+  internals:
+    process_throttle_secs: 5
